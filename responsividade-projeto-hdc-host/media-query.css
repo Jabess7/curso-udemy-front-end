@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+@media screen and (max-width: 570px) {
+    .navbar-container{
+        height: auto;
+    }
+    
+    i#burguer{
+        display: block;
+        cursor: pointer;
+        color: #fff;
+        padding: 10px;
+
+        
+    }    
+    .navbar-items li{
+        display: flex;
+        flex-direction: column;
+        margin: 15px;
+        text-align: center;
+    }
+   
+    
+
+}
+
