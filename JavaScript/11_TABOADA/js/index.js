@@ -35,6 +35,6 @@ multiplicationForm.addEventListener("submit", (e) => {
     }
     createTable(multiplicationNumber, multiplicatorNumber)
 
-    console.log(multiplicationNumber, multiplicatorNumber)
+    
 
 })
