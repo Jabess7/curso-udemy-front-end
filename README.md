@@ -10,6 +10,6 @@ links para exercícios
 
 Acesso o repositorio
 
-![alt text](image.png)
 
- Curso hora de codar
+![alt text]
+(image.png)
