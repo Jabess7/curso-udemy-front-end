@@ -1,5 +1,5 @@
 # curso-udemy-front-end
-links para exercios 
+links para exercícios
 
 <a href="https://jabess7.github.io/curso-udemy-front-end/JavaScript/14_CALCULADORA_IMC/index">calculadora imc</a>
 
@@ -9,6 +9,7 @@ links para exercios
 
 
 Acesso o repositorio
+
 ![alt text](image.png)
 
  Curso hora de codar
