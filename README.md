@@ -11,5 +11,4 @@ links para exercícios
 Acesso o repositorio
 
 
-![alt text]
-(image.png)
+![alt text](image.png)
