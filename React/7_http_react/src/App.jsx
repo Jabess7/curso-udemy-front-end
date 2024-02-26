@@ -1,35 +1,94 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
+import {useFetch} from "./hooks/useFetch";
+
+const url = "http://localhost:3001/products"
+
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  //resgatando dados
+  const [produto, setProduto] = useState([])
+
+  //4 - custom hook
+  const {data: items} = useFetch(url)
+
+ /*useEffect(() => {
+  async function getData(){
+    const res = await fetch(url)
+    const data = await res.json()
+
+    setProduto(data)
+  }
+  getData();
+ }, [])
+*/
+
+//limpar
+const limpar = () =>{
+  setName('')
+  setPrice('')
+};
+
+ // 2 - envios de dados
+ const [name,setName] = useState('')
+ const [price, setPrice] = useState('')
+
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  const product={
+    name,
+    price
+    
+  };
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(product),
+  }
+  );
+// 3 - carregamento dinamico
+
+const addedProduct = await res.json()
+
+setProduto((prevProducts) => [...prevProducts, addedProduct])
+
+limpar()
+
+};
+
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='App'>
+      <h1>HTTP em React</h1>
+      {/*1 - resgate de dados  */}
+      <ul>
+        {items &&
+        items.map((produto) => (
+          <li key={produto.id}>{produto.name} - R$ {produto.price}</li>
+        ))}
+      </ul>
+      {/*2 - Enviando dados */}
+      <div className="add-product">
+        <form onSubmit={handleSubmit}>
+          <label >
+            <span>Nome</span>
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+          </label>
+          <label>
+            <span>Preço</span>
+            <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} />
+          </label>
+          <input type="submit" value="Enviar" />
+          
+        </form>
+
+        
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+    </div>  
+)
 }
 
 export default App
