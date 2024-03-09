@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import {useFetch} from "./hooks/useFetch";
 
-const url = "http://localhost:3001/products"
+const url = ""
 
 import './App.css'
 
@@ -10,7 +10,7 @@ function App() {
   const [produto, setProduto] = useState([])
 
   //4 - custom hook
-  const {data: items} = useFetch(url)
+  const {data, httpConfig, loading, error} = useFetch(url)
 
  /*useEffect(() => {
   async function getData(){
@@ -40,19 +40,23 @@ const limpar = () =>{
     price
     
   };
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify(product),
-  }
-  );
-// 3 - carregamento dinamico
 
-const addedProduct = await res.json()
+  // 5-refatorando post
 
-setProduto((prevProducts) => [...prevProducts, addedProduct])
+  httpConfig(product, "POST")
+//   const res = await fetch(url, {
+//     method: "POST",
+//     headers: {
+//       "Content-type": "application/json",
+//     },
+//     body: JSON.stringify(product),
+//   }
+//   );
+// // 3 - carregamento dinamico
+
+// const addedProduct = await res.json()
+
+// setProduto((prevProducts) => [...prevProducts, addedProduct])
 
 limpar()
 
@@ -62,13 +66,16 @@ limpar()
   return (
     <div className='App'>
       <h1>HTTP em React</h1>
-      {/*1 - resgate de dados  */}
+      {/*6 - loading */}
+      {/*7 - refatorando post */}
+      {error  ? error && <p>{error}</p> :
+     loading  ?  loading && <p>Carregando...</p> :     
       <ul>
-        {items &&
-        items.map((produto) => (
+        {data &&
+        data.map((produto) => (
           <li key={produto.id}>{produto.name} - R$ {produto.price}</li>
         ))}
-      </ul>
+      </ul>}
       {/*2 - Enviando dados */}
       <div className="add-product">
         <form onSubmit={handleSubmit}>
@@ -80,7 +87,10 @@ limpar()
             <span>Preço</span>
             <input type="text" value={price} onChange={(e) => setPrice(e.target.value)} />
           </label>
-          <input type="submit" value="Enviar" />
+          {/*<input type="submit" value="Enviar" />*/}
+          {loading && <input type='submit' disabled value="Aguarde"></input>}
+          {!loading && <input type='submit' value="Enviar"></input>}
+
           
         </form>
 
